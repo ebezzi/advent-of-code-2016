@@ -16,11 +16,15 @@ object Day5Part2 extends App{
     .filter(_.take(5) == "00000")
     .filter(_(5).isDigit)
     .filter(_(5).toString.toInt < 8)
-    .map { h =>
+    .scanLeft((Seq.empty[Int], Option[String](null))) { case ((positions, res), h) =>
       val pos = h(5).toString.toInt
       val digit = h(6)
-      (Seq.fill(pos)("_") ++ digit.toString ++ Seq.fill(7-pos)("_")).mkString
+      if (positions contains pos)
+        positions -> None
+      else
+        (positions :+ pos) -> Option((Seq.fill(pos)("_") ++ digit.toString ++ Seq.fill(7-pos)("_")).mkString)
     }
+    .collect { case (_, Some(xs)) => xs }
     .take(8)
     .foreach(println)
 
