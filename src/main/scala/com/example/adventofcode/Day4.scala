@@ -2,9 +2,6 @@ package com.example.adventofcode
 
 object Day4 extends App {
 
-  val input = "aaaaa-bbb-z-y-x-123[abxyz]"
-
-
   def isProper(input: String) = {
 
     val split = input.split(Array('[', ']')).filter(_.nonEmpty)
@@ -24,8 +21,6 @@ object Day4 extends App {
     calculated == checksum
 
   }
-
-  println(isProper(input))
 
   val res  = Inputs.day4.lines.filter(isProper).map(_.filter(_.isDigit).mkString.toInt).sum
   println(res)
